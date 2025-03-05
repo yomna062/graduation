@@ -1,4 +1,5 @@
     import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
     export default function NestedNavbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -7,8 +8,8 @@
         <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50 mb-5">
         <div className="flex justify-between items-center py-2 px-4 md:px-8">
             {/* Logo */}
-            <div className="text-xl md:text-2xl font-bold text-blue-700">
-            Curai
+            <div className="text-xl md:text-2xl font-bold text-blue-700 cursor-pointer">
+            <Link to={'/'}>Curai</Link>
             </div>
 
             {/* Hamburger Menu for Small Screens */}
@@ -24,7 +25,7 @@
             {/* Links for Desktop */}
             <ul className="hidden md:flex space-x-4 md:space-x-8">
             <li className="text-gray-700 hover:text-blue-700 text-sm md:text-base">
-                <a href="#">Home</a>
+                <a href="/">Home</a>
             </li>
             <li className="text-gray-700 hover:text-blue-700 text-sm md:text-base">
                 <a href="#">Find a doctor</a>
@@ -36,12 +37,12 @@
 
             {/* Buttons for Desktop */}
             <div className="hidden md:flex space-x-2 md:space-x-4">
-            <button className="border border-blue-600 text-blue-600 hover:text-white rounded-full px-3 md:px-4 py-1 text-sm bg-blue-100">
+            <Link to={'/login'} className="border border-blue-600 text-blue-600 hover:text-white transition duration-200 rounded-full px-3 md:px-4 py-1 text-sm bg-blue-100">
                 Login
-            </button>
-            <button className="bg-blue-600 text-white rounded-full px-3 md:px-4 py-1 text-sm hover:bg-blue-700">
+            </Link>
+            <Link to={'/Register'} className="bg-blue-600 text-white rounded-full px-3 md:px-4 py-1 text-sm hover:bg-blue-700 transition duration-200">
                 Register
-            </button>
+            </Link>
             </div>
         </div>
 
@@ -64,14 +65,14 @@
                 </a>
             </li>
             <li>
-                <button className="w-full text-left border border-blue-600 text-blue-600 rounded-full px-4 py-1 text-sm hover:bg-blue-100">
+                <Link to={'/login'} className="w-full text-left border border-blue-600 text-blue-600 rounded-full px-4 py-1 text-sm hover:bg-blue-100">
                 Login
-                </button>
+                </Link >
             </li>
             <li>
-                <button className="w-full text-left bg-blue-600 text-white rounded-full px-4 py-1 text-sm hover:bg-blue-700">
+                <Link to={'/Register'} className="w-full text-left bg-blue-600 text-white rounded-full px-4 py-1 text-sm hover:bg-blue-700">
                 Register
-                </button>
+                </Link >
             </li>
             </ul>
         </div>
