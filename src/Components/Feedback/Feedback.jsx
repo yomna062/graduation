@@ -32,7 +32,7 @@ export default function Feedback() {
 
     return (
         <>
-            <div className='container mx-auto px-8 lg:px-20 py-20 bg-gray-200  '>
+            <div className='container mx-auto px-8 lg:px-20 py-20 bg-gray-200  my-10'>
                 <div className='flex flex-col md:flex-row items-start justify-between'>
                     {/* النص الجانبي */}
                     <div className='w-full md:w-5/12 space-y-4'>
@@ -56,7 +56,7 @@ export default function Feedback() {
                     </div>
 
                     {/* الكروت الجانبية للتعليقات */}
-                    <div className='w-full md:w-6/12  md:mt-0 relative translate-y-4'>
+                    <div className='w-full md:w-6/12  md:mt-0 relative translate-y-4 '>
                         <div className='relative '>
                             <div className='absolute inset-0 transform translate-x-8 translate-y-8 bg-white rounded-xl shadow-lg'></div>
                             <div className='absolute inset-0 transform translate-x-4 translate-y-4 bg-white rounded-xl shadow-md'></div>

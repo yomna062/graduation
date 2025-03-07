@@ -1,8 +1,11 @@
-// src/components/MostSearched/MostSearched.js
 import React from 'react';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import docimg from '../../assets/images/doc3.png';
 
 export default function MostSearched() {
+    const navigate = useNavigate();
+
     // بيانات الأطباء
     const doctors = [
         { name: "DR / Ahmed Hamdy", specialty: "Cardiologist", rating: "99%", image: docimg },
@@ -10,6 +13,40 @@ export default function MostSearched() {
         { name: "DR / Mohamed Ali", specialty: "Dentist", rating: "98%", image: docimg },
         { name: "DR / Aisha Khaled", specialty: "Pediatrician", rating: "97%", image: docimg }
     ];
+
+    // التحقق من حالة تسجيل الدخول
+    const handleAppointmentClick = () => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            // إذا لم يكن مسجلاً الدخول، نظهر SweetAlert
+            Swal.fire({
+                title: "🔐You are not logged in!",
+                text: "Please login or register to book an appointment.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Login",
+                cancelButtonText: "Register",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#28a745"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login"); // التوجيه لصفحة تسجيل الدخول
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    navigate("/register"); // التوجيه لصفحة التسجيل
+                }
+            });
+        } else {
+            // إذا كان مسجلاً دخوله، يمكنه متابعة الحجز
+            Swal.fire({
+                title: "Appointment Booked!",
+                text: "Your appointment has been successfully booked.",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6"
+            });
+        }
+    };
 
     return (
         <>
@@ -39,7 +76,10 @@ export default function MostSearched() {
                             <div className="p-4">
                                 <h5 className="text-xl font-semibold text-gray-900">{doctor.name}</h5>
                                 <p className="text-gray-500">{doctor.specialty}</p>
-                                <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
+                                <button
+                                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+                                    onClick={handleAppointmentClick}
+                                >
                                     Book Appointment
                                 </button>
                             </div>

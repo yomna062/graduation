@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://mostafa3mad.pythonanywhere.com/api/'
+    baseURL: 'https://mostafa3mad.pythonanywhere.com/'
+    //"https://mostafa3mad.pythonanywhere.com/All_doctors/"
 });
 
 axiosInstance.interceptors.request.use(
