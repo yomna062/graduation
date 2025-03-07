@@ -26,12 +26,12 @@ const features = [
 
 const Service = () => {
   return (
-    <div className='container mx-auto px-4 max-w-4xl'>
+    <div className='container mx-auto px-4 max-w-4xl mb-8'>
       <div className='m-5'>
         <h4 className='text-gray-600'>Service</h4>
         <h2 className='text-xl md:text-2xl font-bold text-gray-800 leading-tight'>
           Let us make going <br /> to the doctor 
-          <span 
+          <span className='ms-2'
             style={{ 
               color: 'var(--main-color)', 
               borderBottom: '2px solid var(--main-color)', 
