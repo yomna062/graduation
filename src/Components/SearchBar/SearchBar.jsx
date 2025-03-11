@@ -12,31 +12,66 @@ const SearchBar = ({ onSearch }) => {
     const [searching, setSearching] = useState(false);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        const fetchDoctors = async () => {
-            setLoading(true);
-            try {
-                const token = localStorage.getItem("token");
-                console.log("🔹 Current Token:", token);
+    // ✅ دالة تحديث الـ token
+    const tryRefreshToken = async () => {
+        const refreshToken = localStorage.getItem("refresh");
+        if (!refreshToken) return handleLogout(); // 🔴 تسجيل الخروج لو الـ refresh token مفقود
 
-                const response = await axiosInstance.get("/All_doctors/", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+        try {
+            const response = await axiosInstance.post("/api/refresh", {}, {
+                headers: {
+                    Authorization: `Bearer ${refreshToken}`,
+                },
+            });
 
-                console.log("✅ Doctors fetched:", response.data);
-
-                if (response.data && response.data.results) {
-                    setDoctorsList(response.data.results);
-                } else {
-                    setError("⚠️ No doctors found.");
-                }
-            } catch (err) {
-                console.error("⚠️ Error fetching doctors:", err.response ? err.response.data : err.message);
-                setError("⚠️ Failed to fetch doctors.");
+            if (response.status === 200) {
+                const data = response.data;
+                localStorage.setItem("token", data.token);
+                console.log("✅ Token refreshed:", data.token);
+                return data.token;
+            } else {
+                throw new Error("Failed to refresh token");
             }
-            setLoading(false);
-        };
+        } catch (err) {
+            console.error("❌ Error refreshing token:", err);
+            handleLogout(); // 🔴 تسجيل الخروج لو التحديث فشل
+        }
+    };
 
+    const fetchDoctors = async () => {
+        setLoading(true);
+        try {
+            let token = localStorage.getItem("token");
+            console.log("🔹 Current Token:", token);
+
+            let response = await axiosInstance.get("/All_doctors/", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.status === 401) {
+                console.warn("⚠️ Token expired — trying to refresh");
+                token = await tryRefreshToken(); // ✅ تحديث التوكن
+                if (token) {
+                    response = await axiosInstance.get("/All_doctors/", {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                }
+            }
+
+            if (response.data && response.data.results) {
+                setDoctorsList(response.data.results);
+                setError("");
+            } else {
+                setError("⚠️ No doctors found.");
+            }
+        } catch (err) {
+            console.error("⚠️ Error fetching doctors:", err.response ? err.response.data : err.message);
+            setError("⚠️ Failed to fetch doctors.");
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
         fetchDoctors();
     }, []);
 
@@ -63,10 +98,16 @@ const SearchBar = ({ onSearch }) => {
         onSearch(name);
     };
 
-    // دالة فحص تسجيل الدخول وعرض SweetAlert2
-    const handleSearchClick = () => {
-        const isLoggedIn = localStorage.getItem("token"); // افحص ما إذا كان المستخدم مسجلاً الدخول
+    // ✅ دالة تسجيل الخروج
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh");
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+    };
 
+    const handleSearchClick = () => {
+        const isLoggedIn = localStorage.getItem("token");
         if (!isLoggedIn) {
             Swal.fire({
                 title: "🔐 Login Required!",
@@ -79,9 +120,9 @@ const SearchBar = ({ onSearch }) => {
                 cancelButtonColor: "#28a745",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/login"; // توجيه إلى صفحة تسجيل الدخول
+                    window.location.href = "/login";
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    window.location.href = "/register"; // توجيه إلى صفحة التسجيل
+                    window.location.href = "/register";
                 }
             });
         }
@@ -106,7 +147,7 @@ const SearchBar = ({ onSearch }) => {
                             placeholder="Doctor’s Name"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            onClick={handleSearchClick} // عند النقر يعرض التنبيه
+                            onClick={handleSearchClick}
                             className="flex-1 outline-none text-gray-600"
                             aria-label="Search for a doctor by name"
                         />
