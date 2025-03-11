@@ -43,7 +43,7 @@ export default function NestedNavbar() {
 
   const tryRefreshToken = async () => {
     const refreshToken = localStorage.getItem("refresh");
-    if (!refreshToken) return handleLogout();
+    if (!refreshToken) return;
 
     try {
       const response = await fetch("/api/refresh", {
@@ -66,7 +66,7 @@ export default function NestedNavbar() {
       window.dispatchEvent(new Event("authChange"));
     } catch (error) {
       console.error("Error refreshing token:", error);
-      handleLogout();
+      if (isAuthenticated) handleLogout(); // ✅ منع الحلقة اللانهائية
     }
   };
 
@@ -79,7 +79,7 @@ export default function NestedNavbar() {
     setUserImage(defaultUserImage);
 
     window.dispatchEvent(new Event("authChange"));
-    navigate("/");
+    navigate("/"); 
   };
 
   useEffect(() => {
@@ -120,7 +120,7 @@ export default function NestedNavbar() {
             <Link to="/">Home</Link>
           </li>
           <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
-            <Link to="/find-doctor">Find a doctor</Link>
+            <Link to="/SpecializationsPage">Find a doctor</Link>
           </li>
           <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
             <Link to="/about">About</Link>
