@@ -1,0 +1,8 @@
+.ContactHeading::after {
+    content: "";
+    display: block; /* Change flex to block */
+    margin: 10px auto; /* Center the element */
+    width: 275px;
+    height: 2px;
+    background-color: #25B4F8;
+}

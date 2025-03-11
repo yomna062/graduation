@@ -20,7 +20,7 @@ const SearchBar = ({ onSearch }) => {
                 console.log("🔹 Current Token:", token);
 
                 const response = await axiosInstance.get("/All_doctors/", {
-                    headers: { Authorization: `Bearer ${token}` },
+                    // headers: { Authorization: `Bearer ${token}` },
                 });
 
                 console.log("✅ Doctors fetched:", response.data);

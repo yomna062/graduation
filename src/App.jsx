@@ -7,6 +7,7 @@ import NotFound from './Components/NotFound/NotFound.jsx'
 import Login from './Components/Auth/Login.jsx'
 import Register from './Components/Auth/Register.jsx'
 import { Toaster } from 'react-hot-toast'
+import Contact from './Components/Contact/Contact.jsx'
 
 let routers = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ let routers = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> }, 
+      { path: 'Contact', element: <Contact /> },
       { path: '*', element: <NotFound /> }
     ]
   }

@@ -23,6 +23,8 @@ const Specializations = () => {
                     throw new Error("Failed to fetch");
                 }
                 const data = await response.json();
+                
+                
                 setSpecializations(data);
             } catch {
                 setError("Failed to fetch specializations. Please try again.");

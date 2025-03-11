@@ -40,7 +40,7 @@ export default function Navbar() {
 
     return (
         <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
-            <div className="flex justify-between items-center py-2 px-4 md:px-8">
+            <div className="flex justify-center items-center py-2 px-4 md:px-8">
                 <div className="text-xl md:text-2xl font-bold text-blue-700">Curai</div>
 
                 <ul className="hidden md:flex space-x-4 md:space-x-8">

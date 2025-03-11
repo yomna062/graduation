@@ -30,11 +30,13 @@ function Login() {
         'https://mostafa3mad.pythonanywhere.com/api/login/',
         values
       );
+      console.log(response.data);
+      
       localStorage.setItem('token', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('user', response.data.username);
 
-      window.dispatchEvent(new Event("authChange")); // 🔥 تحديث الـ Navbar تلقائيًا
+      window.dispatchEvent(new Event("authChange"));
       navigate("/");
     } catch (error) {
       setError(error.response?.data?.detail || "Login failed");
@@ -69,7 +71,7 @@ function Login() {
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-6">
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                Username
+                Username or Email
               </label>
               <input
                 id="username"
