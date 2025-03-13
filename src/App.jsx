@@ -8,20 +8,24 @@ import Login from './Components/Auth/Login.jsx'
 import Register from './Components/Auth/Register.jsx'
 import { Toaster } from 'react-hot-toast'
 import Contact from './Components/Contact/Contact.jsx'
+import AboutUs from './Components/AboutPage/AboutPage.jsx'
+import SpecializationsPage from './Components/SpecializationsPage/SpecializationsPage';
 
-let routers = createBrowserRouter([
+const routers = createBrowserRouter([
   {
-    path: '',
+    path: "",
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'login', element: <Login /> },
-      { path: 'register', element: <Register /> }, 
-      { path: 'Contact', element: <Contact /> },
-      { path: '*', element: <NotFound /> }
-    ]
-  }
-])
+      { path: "contact", element: <Contact /> },
+      { path: "about", element: <AboutUs /> },
+      { path: "specializationsPage", element: <SpecializationsPage /> },
+      { path: "*", element: <NotFound /> }
+    ],
+  },
+  { path: "login", element: <Login /> },
+  { path: "register", element: <Register /> }
+]);
 
 function App() {
   return (
