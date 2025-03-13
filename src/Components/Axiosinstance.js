@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if (error.response?.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             const refreshToken = localStorage.getItem("refresh");
@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
                 );
 
                 localStorage.setItem("token", response.data.access);
-                localStorage.setItem("refresh", response.data.refresh);
+                // localStorage.setItem("refresh", response.data.refresh);
 
                 originalRequest.headers = originalRequest.headers || {};
                 originalRequest.headers.Authorization = `Bearer ${response.data.access}`;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-
 import defaultUserImage from "../../assets/images/user.jpg";
 import axiosInstance from './../Axiosinstance';
+import axios from "axios";
 
 export default function NestedNavbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,18 +43,43 @@ export default function NestedNavbar() {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await axiosInstance.post("/api/logout/");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    } finally {
-      localStorage.removeItem("token");
+    const refresh = localStorage.getItem("refresh");
+    
+    if (!refresh) {
+      console.error("No refresh token available");
+      return;
+    }
+  
+    try {      
+      const accessToken = localStorage.getItem("token"); 
+      if (!accessToken) {
+        console.error("No access token available");
+        return;
+      }
+  
+      const response = await axios.post(
+        "https://mostafa3mad.pythonanywhere.com/api/logout/", 
+        { refresh: refresh },  
+        {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`, 
+            "Accept": "application/json", 
+          }
+        }
+      );
+  
+      // Handle the response (if successful)
+      console.log("Logout successful:", response.data);
       localStorage.removeItem("refresh");
-      localStorage.removeItem("user");
-      navigate("/");
-      window.dispatchEvent(new Event("authChange"));
+      localStorage.removeItem("token");
+      navigate('/login')
+    } catch (error) {
+      console.error("Logout failed:", error.response ? error.response.data : error.message);
     }
   };
+  
+  
+  
 
   useEffect(() => {
     const closeDropdown = (e) => {

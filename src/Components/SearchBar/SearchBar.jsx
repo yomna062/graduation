@@ -13,50 +13,50 @@ const SearchBar = ({ onSearch }) => {
     const [error, setError] = useState("");
 
     // ✅ دالة تحديث الـ token
-    const tryRefreshToken = async () => {
-        const refreshToken = localStorage.getItem("refresh");
-        if (!refreshToken) return handleLogout(); // 🔴 تسجيل الخروج لو الـ refresh token مفقود
+    // const tryRefreshToken = async () => {
+    //     const refreshToken = localStorage.getItem("refresh");
+    //     if (!refreshToken) return handleLogout(); // 🔴 تسجيل الخروج لو الـ refresh token مفقود
 
-        try {
-            const response = await axiosInstance.post("/api/refresh", {}, {
-                headers: {
-                    Authorization: `Bearer ${refreshToken}`,
-                },
-            });
+    //     try {
+    //         const response = await axiosInstance.post("/api/refresh", {}, {
+    //             headers: {
+    //                 Authorization: `Bearer ${refreshToken}`,
+    //             },
+    //         });
 
-            if (response.status === 200) {
-                const data = response.data;
-                localStorage.setItem("token", data.token);
-                console.log("✅ Token refreshed:", data.token);
-                return data.token;
-            } else {
-                throw new Error("Failed to refresh token");
-            }
-        } catch (err) {
-            console.error("❌ Error refreshing token:", err);
-            handleLogout(); // 🔴 تسجيل الخروج لو التحديث فشل
-        }
-    };
+    //         if (response.status === 200) {
+    //             const data = response.data;
+    //             localStorage.setItem("token", data.token);
+    //             console.log("✅ Token refreshed:", data.token);
+    //             return data.token;
+    //         } else {
+    //             throw new Error("Failed to refresh token");
+    //         }
+    //     } catch (err) {
+    //         console.error("❌ Error refreshing token:", err);
+    //         handleLogout(); // 🔴 تسجيل الخروج لو التحديث فشل
+    //     }
+    // };
 
     const fetchDoctors = async () => {
         setLoading(true);
         try {
             let token = localStorage.getItem("token");
-            console.log("🔹 Current Token:", token);
+            // console.log("🔹 Current Token:", token);
 
             let response = await axiosInstance.get("/All_doctors/", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            if (response.status === 401) {
-                console.warn("⚠️ Token expired — trying to refresh");
-                token = await tryRefreshToken(); // ✅ تحديث التوكن
-                if (token) {
-                    response = await axiosInstance.get("/All_doctors/", {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                }
-            }
+            // if (response.status === 401) {
+            //     console.warn("⚠️ Token expired — trying to refresh");
+            //     token = await tryRefreshToken(); // ✅ تحديث التوكن
+            //     if (token) {
+            //         response = await axiosInstance.get("/All_doctors/", {
+            //             headers: { Authorization: `Bearer ${token}` },
+            //         });
+            //     }
+            // }
 
             if (response.data && response.data.results) {
                 setDoctorsList(response.data.results);
