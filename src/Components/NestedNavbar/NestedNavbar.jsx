@@ -4,6 +4,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 import defaultUserImage from "../../assets/images/user.jpg";
 import axiosInstance from './../Axiosinstance';
+import axios from "axios";
 
 export default function NestedNavbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,7 +45,7 @@ export default function NestedNavbar() {
 
   const handleLogout = async () => {
     try {
-      await axiosInstance.post("/api/logout/");
+      await axios.post("/api/logout/");
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
