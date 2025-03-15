@@ -150,7 +150,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="flex items-center justify-center w-full max-w-5xl">
+      <div className="flex items-center justify-center w-full max-w-5xl mb-5 mt-5">
         <div className="flex flex-wrap bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Register Form */}
           <div className="w-full md:w-7/12 p-8">
