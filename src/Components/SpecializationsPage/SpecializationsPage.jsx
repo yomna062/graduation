@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import axiosInstance from '../Axiosinstance';
 
 export default function SpecializationsPage() {
@@ -6,22 +7,21 @@ export default function SpecializationsPage() {
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
   
-  // ✅ عوامل البحث
+  
   const [searchSpecialization, setSearchSpecialization] = useState('');
   const [searchPrice, setSearchPrice] = useState('');
   const [searchRating, setSearchRating] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // ✅ Fetch specializations
         const specializationsRes = await axiosInstance.get('/specializations/');
         setSpecializations(specializationsRes.data);
 
-        // ✅ Fetch doctors
         const doctorsRes = await axiosInstance.get('/All_doctors/');
         setDoctors(doctorsRes.data.results);
         setFilteredDoctors(doctorsRes.data.results);
@@ -35,7 +35,7 @@ export default function SpecializationsPage() {
     fetchData();
   }, []);
 
-  // ✅ فلترة البيانات بناءً على عوامل البحث
+  
   useEffect(() => {
     let filtered = doctors;
 
@@ -60,7 +60,7 @@ export default function SpecializationsPage() {
     setFilteredDoctors(filtered);
   }, [searchSpecialization, searchPrice, searchRating, searchLocation, doctors]);
 
-  // ✅ دالة لإعادة ضبط الفلاتر
+
   const resetFilters = () => {
     setSearchSpecialization('');
     setSearchPrice('');
@@ -69,14 +69,37 @@ export default function SpecializationsPage() {
   };
 
   return (
-    <div className="flex gap-4 p-4">
-      {/* ✅ Specializations Slider */}
-      <div className="w-1/4 overflow-y-auto h-screen border-r border-gray-200">
-        <h2 className="text-xl font-bold mb-4">Specializations</h2>
+    <div className="flex flex-col md:flex-row gap-4 p-4">
+    
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden bg-blue-500 text-white px-4 py-2 rounded-md mb-2 flex items-center gap-2"
+      >
+        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        {sidebarOpen ? 'Close Specializations' : 'Open Specializations'}
+      </button>
+
+      <div
+        className={`absolute md:relative top-0 left-0 h-full w-64 bg-white border-r border-gray-200 p-4 transition-transform duration-300 z-50 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 md:w-1/4 md:h-screen`}
+      >
+
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Specializations</h2>
+          <button onClick={() => setSidebarOpen(false)}>
+            <X size={24} className="text-gray-500 hover:text-gray-700" />
+          </button>
+        </div>
+
+
         {specializations.map((spec) => (
           <div
             key={spec.id}
-            onClick={() => setSearchSpecialization(spec.name)}
+            onClick={() => {
+              setSearchSpecialization(spec.name);
+              setSidebarOpen(false); 
+            }}
             className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${
               searchSpecialization === spec.name ? 'bg-blue-100' : ''
             }`}
@@ -87,9 +110,8 @@ export default function SpecializationsPage() {
       </div>
 
       {/* ✅ Search Filters */}
-      <div className="w-3/4">
-        <div className="mb-4 grid grid-cols-4 gap-4">
-          {/* 🔎 Search by Price */}
+      <div className="w-full md:w-3/4">
+        <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <input
             type="number"
             placeholder="Max Price"
@@ -98,7 +120,6 @@ export default function SpecializationsPage() {
             className="border p-2 rounded-md w-full"
           />
 
-          {/* 🔎 Search by Rating */}
           <input
             type="number"
             placeholder="Min Rating"
@@ -108,7 +129,6 @@ export default function SpecializationsPage() {
             className="border p-2 rounded-md w-full"
           />
 
-          {/* 🔎 Search by Location */}
           <input
             type="text"
             placeholder="Location"
@@ -117,7 +137,6 @@ export default function SpecializationsPage() {
             className="border p-2 rounded-md w-full"
           />
 
-          {/* 🔄 Reset Button */}
           <button
             onClick={resetFilters}
             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
@@ -126,11 +145,10 @@ export default function SpecializationsPage() {
           </button>
         </div>
 
-        {/* ✅ حالة التحميل */}
         {loading ? (
           <div className="text-center text-gray-500">Loading doctors...</div>
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDoctors.length > 0 ? (
               filteredDoctors.map((doctor) => (
                 <div key={doctor.id} className="border p-4 rounded-lg shadow-md">
@@ -152,7 +170,7 @@ export default function SpecializationsPage() {
                 </div>
               ))
             ) : (
-              <div className="text-center text-gray-500 col-span-3">
+              <div className="text-center text-gray-500 col-span-full">
                 No doctors found with these filters.
               </div>
             )}

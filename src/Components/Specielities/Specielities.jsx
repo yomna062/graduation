@@ -68,7 +68,7 @@ const Specializations = () => {
             });
         } else {
             // If user is logged in, redirect to specialists page
-            window.location.href = "/specialists";
+            window.location.href = "/SpecializationsPage";
         }
     };
 
