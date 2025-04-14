@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast'
 import Contact from './Components/Contact/Contact.jsx'
 import AboutUs from './Components/AboutPage/AboutPage.jsx'
 import SpecializationsPage from './Components/SpecializationsPage/SpecializationsPage';
+import DoctorDeatils from './Components/DoctorPage/DoctorDeatils.jsx'
 
 const routers = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const routers = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "about", element: <AboutUs /> },
       { path: "specializationsPage", element: <SpecializationsPage /> },
+      { path: "Doctor-details/:id", element: <DoctorDeatils /> },
       { path: "*", element: <NotFound /> }
     ],
   },

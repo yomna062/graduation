@@ -12,7 +12,6 @@ export default function Layout() {
 		<NestedNavbar/>
 
 		<div className=" mt-4 py-12 ">
-
 			<Outlet></Outlet>
 		</div>
 		<Footer />

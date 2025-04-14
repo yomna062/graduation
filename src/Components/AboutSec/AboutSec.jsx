@@ -2,8 +2,10 @@ import React from 'react';
 import { FaHeart, FaUserMd, FaHospitalAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2'; // استيراد SweetAlert2
 import imgsec from '../../assets/images/doc2.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function AboutSec() {
+    const navigate = useNavigate()
     const stats = [
         {
             icon: <FaHeart className="text-4xl text-blue-500" />,
@@ -28,6 +30,7 @@ export default function AboutSec() {
     // دالة التحقق من تسجيل الدخول
     const handleBookAppointment = () => {
         const token = localStorage.getItem("token");
+        navigate('/SpecializationsPage')
 
         if (!token) {
             Swal.fire({

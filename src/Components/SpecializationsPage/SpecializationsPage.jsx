@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import axiosInstance from '../Axiosinstance';
+import { Link } from 'react-router-dom';
 
 export default function SpecializationsPage() {
   const [specializations, setSpecializations] = useState([]);
@@ -125,7 +126,7 @@ export default function SpecializationsPage() {
             placeholder="Min Rating"
             value={searchRating}
             onChange={(e) => setSearchRating(e.target.value)}
-            step="0.1"
+            step="1"
             className="border p-2 rounded-md w-full"
           />
 
@@ -151,7 +152,7 @@ export default function SpecializationsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDoctors.length > 0 ? (
               filteredDoctors.map((doctor) => (
-                <div key={doctor.id} className="border p-4 rounded-lg shadow-md">
+                <Link to={`/Doctor-details/${doctor.id}`} key={doctor.id} className="border p-4 rounded-lg shadow-md">
                   <img
                     src={doctor.profile_picture}
                     alt={doctor.username}
@@ -164,10 +165,10 @@ export default function SpecializationsPage() {
                   </p>
                   <p className="text-yellow-500 mt-1">⭐ {doctor.rating} / 5</p>
                   <p className="text-gray-400">{doctor.location}</p>
-                  <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                  <button className="mt-2 bg-blue-500 text-white w-full py-2 rounded-md hover:bg-blue-600">
                     Book Appointment
                   </button>
-                </div>
+                </Link>
               ))
             ) : (
               <div className="text-center text-gray-500 col-span-full">

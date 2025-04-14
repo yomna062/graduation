@@ -31,6 +31,7 @@ function Login() {
         values
       );
       console.log(response.data);
+      localStorage.setItem('username' , response.data.username)
       
       localStorage.setItem('token', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
