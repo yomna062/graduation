@@ -9,6 +9,7 @@ import AboutSec from './../AboutSec/AboutSec';
 import Feedback from './../Feedback/Feedback';
 import { useNavigate } from 'react-router-dom';
 import Specielities from './../Specielities/Specielities';
+import { Helmet } from 'react-helmet';
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -42,6 +43,9 @@ export default function Home() {
 
   return (
     <>
+    <Helmet>
+      <title>Home</title>
+    </Helmet>
       <MainSection />
       <SearchBar />
       <Service />

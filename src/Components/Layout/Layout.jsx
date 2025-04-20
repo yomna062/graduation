@@ -4,13 +4,13 @@ import Navbar from '../Navbar/Navbar.jsx'
 import Footer from '../Footer/Footer.jsx'
 import { Outlet } from 'react-router-dom'
 import NestedNavbar from '../NestedNavbar/NestedNavbar.jsx'
+import { Navigation } from 'swiper/modules';
 
 export default function Layout() {
 
 	return <>
 
 		<NestedNavbar/>
-
 		<div className=" mt-4 py-12 ">
 			<Outlet></Outlet>
 		</div>

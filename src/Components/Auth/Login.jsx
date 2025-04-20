@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { CircleLoader } from 'react-spinners';
+import { Helmet } from 'react-helmet';
 
 function Login() {
   const navigate = useNavigate();
@@ -56,6 +57,10 @@ function Login() {
   });
 
   return (
+    <>
+   <Helmet>
+    <title>Login</title>
+   </Helmet>
     <div className="flex items-center justify-center min-h-screen">
       <div className="flex flex-col md:flex-row bg-white shadow-2xl rounded-2xl overflow-hidden max-w-4xl w-full mx-4">
         <div className="hidden md:block md:w-1/2 relative">
@@ -131,6 +136,7 @@ function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

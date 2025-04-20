@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import axios from "axios";
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import { Helmet } from 'react-helmet';
 
 
 const Register = () => {
@@ -149,6 +150,10 @@ const Register = () => {
 
 
   return (
+    <>
+    <Helmet>
+      <title>Register</title>
+    </Helmet>
     <div className="min-h-screen flex items-center justify-center">
       <div className="flex items-center justify-center w-full max-w-5xl mb-5 mt-5">
         <div className="flex flex-wrap bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -482,6 +487,7 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

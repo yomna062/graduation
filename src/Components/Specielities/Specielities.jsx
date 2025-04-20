@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
+import "swiper/css"; // استيراد CSS الأساسي فقط
+import { Autoplay } from "swiper/modules"; // استيراد موديول Autoplay بشكل صحيح
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeartbeat, faBrain, faUserMd, faTooth } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2"; // Import SweetAlert2
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Specializations = () => {
     const [specializations, setSpecializations] = useState([]);
@@ -23,8 +23,6 @@ const Specializations = () => {
                     throw new Error("Failed to fetch");
                 }
                 const data = await response.json();
-                
-                
                 setSpecializations(data);
             } catch {
                 setError("Failed to fetch specializations. Please try again.");
@@ -48,10 +46,8 @@ const Specializations = () => {
     };
 
     const handleBrowseClick = () => {
-        const token = localStorage.getItem("token"); // Check if the user is logged in
-
+        const token = localStorage.getItem("token");
         if (!token) {
-            // If no token, show the login/register alert
             Swal.fire({
                 title: "🔐 Login Required!",
                 text: "Please log in or create an account to browse all specialists.",
@@ -63,20 +59,21 @@ const Specializations = () => {
                 cancelButtonColor: "#28a745",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/login"; // Redirect to login page
+                    window.location.href = "/login";
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    window.location.href = "/register"; // Redirect to register page
+                    window.location.href = "/register";
                 }
             });
         } else {
-            // If user is logged in, redirect to specialists page
             window.location.href = "/SpecializationsPage";
         }
     };
 
     return (
-        <div className="text-center p-8 bg-blue-50 my-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Explore the available medical fields</h2>
+        <div className="text-center p-8 bg-blue-50 my-10 shadow-black">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                Explore the available medical fields
+            </h2>
 
             {loading && <div className="text-blue-600 font-semibold">Loading...</div>}
             {error && <div className="text-red-500">{error}</div>}
@@ -96,19 +93,22 @@ const Specializations = () => {
                     {specializations.map(({ id, name }) => (
                         <SwiperSlide key={id}>
                             <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 text-left">
-                                {/* Icon */}
                                 <div className="bg-gray-100 p-3 rounded-full w-fit mb-4">
-                                    <FontAwesomeIcon icon={getSpecializationIcon(name)} className="text-blue-600 text-3xl" />
+                                    <FontAwesomeIcon
+                                        icon={getSpecializationIcon(name)}
+                                        className="text-blue-600 text-3xl"
+                                    />
                                 </div>
-
-                                {/* Text Content */}
                                 <h3 className="text-xl font-bold text-gray-900">{name}</h3>
-                                <p className="text-gray-600 text-sm mt-1">Specialist in {name} field.</p>
-
-                                {/* Explore Button */}
-                                <a href="#" className="flex items-center gap-1 text-blue-600 font-medium mt-3">
+                                <p className="text-gray-600 text-sm mt-1">
+                                    Specialist in {name} field.
+                                </p>
+                                <Link
+                                    to={`/SpecializationsPage`}
+                                    className="flex items-center gap-1 text-blue-600 font-medium mt-3"
+                                >
                                     Explore <span className="text-lg">→</span>
-                                </a>
+                                </Link>
                             </div>
                         </SwiperSlide>
                     ))}
