@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import defaultUserImage from "../../assets/images/user.jpg";
 import axios from "axios";
@@ -107,20 +107,47 @@ export default function NestedNavbar() {
           </button>
         </div>
 
-        {/* ✅ روابط الصفحة تظهر فقط للمستخدم المسجل */}
         {isAuthenticated && (
           <ul className={`md:flex space-x-6 ${isMenuOpen ? "block" : "hidden"} absolute md:relative bg-white md:bg-transparent top-14 left-0 md:top-0 w-full md:w-auto shadow-md md:shadow-none z-40`}>
-            <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
-              <Link to="/">Home</Link>
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
+                }
+              >
+                Home
+              </NavLink>
             </li>
-            <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
-              <Link to="/SpecializationsPage">Find a doctor</Link>
+            <li>
+              <NavLink
+                to="/SpecializationsPage"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
+                }
+              >
+                Find a doctor
+              </NavLink>
             </li>
-            <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
-              <Link to="/about">About</Link>
+            <li>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
+                }
+              >
+                About
+              </NavLink>
             </li>
-            <li className="text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0">
-              <Link to="/Contact">Contact</Link>
+            <li>
+              <NavLink
+                to="/Contact"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
+                }
+              >
+                Contact
+              </NavLink>
             </li>
           </ul>
         )}
@@ -154,7 +181,7 @@ export default function NestedNavbar() {
               )}
             </div>
           ) : (
-            <div className="flex space-x-2"> 
+            <div className="flex space-x-2">
               <Link to="/login" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 transition duration-300 rounded-full">
                 Login
               </Link>
