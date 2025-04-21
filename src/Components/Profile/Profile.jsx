@@ -18,6 +18,9 @@ export default function Profile() {
     consultation_price: "",
     role: "",
     is_approved: false,
+    gender: "",
+    specialization: "",
+    bonus_points: 0,
   });
 
   const [originalProfile, setOriginalProfile] = useState(null);
@@ -133,7 +136,7 @@ export default function Profile() {
       <Helmet>
         <title>Profile</title>
       </Helmet>
-      <div className="min-h-screen bg-gray-50 py-10 px-5 " >
+      <div className="min-h-screen bg-gray-50 py-10 px-5">
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-2xl">
           <h2 className="text-3xl font-bold mb-8 text-blue-600 text-center">
             Edit Profile
@@ -237,21 +240,55 @@ export default function Profile() {
                       className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                   </div>
+                  <div>
+                    <label className="block mb-1 text-gray-700">Specialization</label>
+                    <input
+                      type="text"
+                      name="specialization"
+                      value={profile.specialization || ""}
+                      disabled
+                      className="w-full border border-gray-300 bg-gray-100 text-gray-500 p-2 rounded-lg"
+                    />
+                  </div>
                 </>
               )}
 
               {profile.role === "patient" && (
-                <div>
-                  <label className="block mb-1 text-gray-700">Age</label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={profile.age || ""}
-                    onChange={handleChange}
-                    className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    placeholder="Enter your age"
-                  />
-                </div>
+                <>
+                  <div>
+                    <label className="block mb-1 text-gray-700">Age</label>
+                    <input
+                      type="number"
+                      name="age"
+                      value={profile.age || ""}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="Enter your age"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-gray-700">Gender</label>
+                    <input
+                      type="text"
+                      name="gender"
+                      value={profile.gender || ""}
+                      disabled
+                      className="w-full border border-gray-300 bg-gray-100 text-gray-500 p-2 rounded-lg"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 text-gray-700">Bonus Points</label>
+                    <input
+                      type="number"
+                      name="bonus_points"
+                      value={profile.bonus_points || 0}
+                      disabled
+                      className="w-full border border-gray-300 bg-gray-100 text-gray-500 p-2 rounded-lg"
+                    />
+                  </div>
+                </>
               )}
             </div>
 

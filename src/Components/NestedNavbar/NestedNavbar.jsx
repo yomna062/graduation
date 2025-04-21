@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX, FiGift } from "react-icons/fi";
 import defaultUserImage from "../../assets/images/user.jpg";
 import axios from "axios";
 
@@ -10,6 +10,8 @@ export default function NestedNavbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [bonusPoints, setBonusPoints] = useState(0);
   const navigate = useNavigate();
 
   const updateAuthStatus = async () => {
@@ -24,18 +26,24 @@ export default function NestedNavbar() {
 
         const user = response.data;
         const profileImage = user?.profile_picture || defaultUserImage;
+        const name = user?.first_name || user?.username || "User";
+        const points = user?.bonus_points || 0;
 
         setIsAuthenticated(true);
         setUserImage(profileImage);
+        setUserName(name);
+        setBonusPoints(points);
 
         localStorage.setItem("user", JSON.stringify({
           ...user,
           profileImage: profileImage,
+          bonusPoints: points,
         }));
       } catch (err) {
         console.error("Error fetching profile:", err);
         setIsAuthenticated(false);
         setUserImage(defaultUserImage);
+        setUserName("");
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         localStorage.removeItem("refresh");
@@ -43,6 +51,7 @@ export default function NestedNavbar() {
     } else {
       setIsAuthenticated(false);
       setUserImage(defaultUserImage);
+      setUserName("");
     }
     setLoading(false);
   };
@@ -72,6 +81,7 @@ export default function NestedNavbar() {
     localStorage.clear();
     setIsAuthenticated(false);
     setUserImage(defaultUserImage);
+    setUserName("");
     navigate("/");
   };
 
@@ -159,13 +169,24 @@ export default function NestedNavbar() {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center space-x-2 focus:outline-none"
               >
+                {/* أيقونة البونص مع الرقم */}
+                <div className="relative w-8 h-8 flex items-center justify-center">
+                  <FiGift className="text-green-500 text-3xl" />
+                  {bonusPoints > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-sm font-semibold px-1.5 py-0.5 rounded-full leading-none">
+                      {bonusPoints}
+                    </span>
+                  )}
+                </div>
+
                 <img
                   src={userImage}
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full border border-gray-300 object-cover"
                 />
+                
                 <span className="text-gray-700 hidden md:block">
-                  Welcome back 👋
+                  Welcome, {userName} 👋
                 </span>
               </button>
 
