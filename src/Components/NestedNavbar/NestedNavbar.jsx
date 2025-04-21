@@ -153,6 +153,9 @@ export default function NestedNavbar() {
                   >
                     Profile
                   </Link>
+                  <Link to={'/Payment'} className="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-200 rounded-b-xl">
+                    Payment
+                  </Link>
                   <div className="border-t border-gray-100"></div>
                   <button
                     onClick={handleLogout}

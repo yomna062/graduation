@@ -1,7 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Style from './Contact.module.css'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Contact() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (values, { resetForm }) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('https://mostafa3mad.pythonanywhere.com/api/contact-us/', values);
+      toast.success('Your message has been sent successfully!');
+      resetForm();
+    } 
+    catch (error) {
+      console.log(error);      
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("Name is required")
+      .min(3, "Name must be at least 3 characters")
+      .max(150, "Name must be at most 150 characters"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    subject: Yup.string()
+      .required("Subject is required")
+      .min(3, "Subject must be at least 3 characters")
+      .max(150, "Subject must be at most 150 characters"),
+    message: Yup.string()
+      .required("Message is required")
+      .min(10, "Message must be at least 10 characters")
+      .max(500, "Message must be at most 500 characters"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    },
+    validationSchema,
+    onSubmit: handleSubmit
+  });
+
   return (
     <div className="container mx-auto px-6 py-10 md:w-11/12">
       {/* Contact Heading */}
@@ -48,25 +97,86 @@ function Contact() {
 
         {/* Right Side - Contact Form */}
         <div className="bg-white p-6 border border-gray-300 rounded-lg shadow-md">
-          <form className="space-y-4">
-            {/* First & Last Name */}
-            <div className="flex space-x-4">
-              <input type="text" placeholder="First Name" className="w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" />
-              <input type="text" placeholder="Last Name" className="w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" />
+          <form className="space-y-4" onSubmit={formik.handleSubmit}>
+            {/* Name */}
+            <div>
+              <input 
+                type="text" 
+                onChange={formik.handleChange} 
+                onBlur={formik.handleBlur} 
+                name='name' 
+                value={formik.values.name} 
+                placeholder="Name" 
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" 
+              />
+              {formik.touched.name && formik.errors.name ? (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
+              ) : null}
             </div>
 
             {/* Email */}
-            <input type="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" />
+            <div>
+              <input 
+                type="email" 
+                onChange={formik.handleChange} 
+                onBlur={formik.handleBlur} 
+                name='email' 
+                value={formik.values.email} 
+                placeholder="Email" 
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" 
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+              ) : null}
+            </div>
 
-            {/* Phone Number */}
-            <input type="tel" placeholder="Phone Number" className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" />
+            {/* Subject */}
+            <div>
+              <input 
+                type="text" 
+                onChange={formik.handleChange} 
+                onBlur={formik.handleBlur} 
+                name='subject' 
+                value={formik.values.subject} 
+                placeholder="Subject" 
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]" 
+              />
+              {formik.touched.subject && formik.errors.subject ? (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.subject}</div>
+              ) : null}
+            </div>
 
-            {/* Leave a Message */}
-            <textarea placeholder="Leave a message" rows="4" className="w-full p-3 resize-none border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]"></textarea>
+            {/* Message */}
+            <div>
+              <textarea 
+                onChange={formik.handleChange} 
+                onBlur={formik.handleBlur} 
+                name='message' 
+                value={formik.values.message} 
+                placeholder="Leave a message" 
+                rows="4" 
+                className="w-full p-3 resize-none border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1376F8]"
+              ></textarea>
+              {formik.touched.message && formik.errors.message ? (
+                <div className="text-red-500 text-sm mt-1">{formik.errors.message}</div>
+              ) : null}
+            </div>
 
             {/* Send Button */}
-            <button className="w-full p-3 bg-[#1376F8] text-white rounded-md hover:bg-[#131bf8] transition">
-              Send
+            <button 
+              type='submit' 
+              disabled={isLoading}
+              className="w-full p-3 bg-[#1376F8] text-white rounded-md hover:bg-[#131bf8] transition flex justify-center items-center"
+            >
+              {isLoading ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Sending...
+                </>
+              ) : 'Send'}
             </button>
           </form>
         </div>

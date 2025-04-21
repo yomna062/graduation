@@ -68,12 +68,12 @@ export default function Navbar() {
                                     Welcome, {userData.name}
                                 </span>
                             </div>
-                            <button
+                            {/* <button
                                 onClick={handleLogout}
                                 className="bg-red-600 text-white rounded-full px-4 py-1 text-sm hover:bg-red-700"
                             >
                                 Logout
-                            </button>
+                            </button> */}
                         </>
                     ) : (
                         <>

@@ -11,6 +11,7 @@ import Contact from './Components/Contact/Contact.jsx'
 import AboutUs from './Components/AboutPage/AboutPage.jsx'
 import SpecializationsPage from './Components/SpecializationsPage/SpecializationsPage';
 import DoctorDeatils from './Components/DoctorPage/DoctorDeatils.jsx'
+import Payment from './Components/Payment/Payment.jsx'
 
 const routers = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const routers = createBrowserRouter([
       { path: "about", element: <AboutUs /> },
       { path: "specializationsPage", element: <SpecializationsPage /> },
       { path: "Doctor-details/:id", element: <DoctorDeatils /> },
+      { path: "Payment", element: <Payment /> },
       { path: "*", element: <NotFound /> }
     ],
   },
@@ -33,7 +35,14 @@ function App() {
   return (
     <>
       <RouterProvider router={routers} />
-      <Toaster />
+      <Toaster toastOptions={
+        {
+          duration: 4000,
+          style:{
+            textAlign: "center",
+          }
+        }
+      } />
     </>
   )
 }
