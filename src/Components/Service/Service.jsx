@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaHeartbeat, FaCalendarCheck, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; // استيراد Link من react-router-dom
 
 const features = [
   {
@@ -11,11 +12,13 @@ const features = [
     icon: <FaHeartbeat className="text-4xl text-blue-600" />,
     title: "Find the suitable doctors for your disease",
     linkText: "Go to Chatbot →",
+    linkTo: "/chatbot", // رابط صفحة Chatbot
   },
   {
     icon: <FaCalendarCheck className="text-4xl text-blue-600" />,
     title: "Book an appointment easily",
     linkText: "Explore doctors →",
+    linkTo: "/SpecializationsPage", // رابط صفحة الأطباء
   },
   {
     icon: <FaLock className="text-4xl text-blue-600" />,
@@ -55,10 +58,14 @@ const Service = () => {
               </div>
             </div>
             <h3 className="text-gray-800 text-lg font-semibold mb-2">{feature.title}</h3>
-            {feature.linkText && (
-              <a href="#" className="text-blue-600 text-sm hover:underline transition-colors duration-300" style={{ color: 'var(--main-color)' }}>
+            {feature.linkText && feature.linkTo && (
+              <Link 
+                to={feature.linkTo} 
+                className="text-blue-600 text-sm hover:underline transition-colors duration-300" 
+                style={{ color: 'var(--main-color)' }}
+              >
                 {feature.linkText}
-              </a>
+              </Link>
             )}
           </div>
         ))}

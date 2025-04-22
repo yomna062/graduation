@@ -13,6 +13,8 @@ import SpecializationsPage from './Components/SpecializationsPage/Specialization
 import DoctorDeatils from './Components/DoctorPage/DoctorDeatils.jsx'
 import Payment from './Components/Payment/Payment.jsx'
 
+import Profile from './Components/Profile/Profile';
+
 const routers = createBrowserRouter([
   {
     path: "",
@@ -24,11 +26,13 @@ const routers = createBrowserRouter([
       { path: "specializationsPage", element: <SpecializationsPage /> },
       { path: "Doctor-details/:id", element: <DoctorDeatils /> },
       { path: "Payment", element: <Payment /> },
+      { path: "Profile", element: <Profile/> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
       { path: "*", element: <NotFound /> }
     ],
   },
-  { path: "login", element: <Login /> },
-  { path: "register", element: <Register /> }
+  
 ]);
 
 function App() {

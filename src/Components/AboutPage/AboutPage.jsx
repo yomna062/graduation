@@ -1,7 +1,13 @@
 import React from 'react';
 import aboutimg from'../../assets/images/aboutimg.jpg'
+import { Helmet } from 'react-helmet';
+
 const AboutUs = () => {
   return (
+    <>
+    <Helmet>
+  <title>About Us</title>
+</Helmet>
     <div className="font-sans">
       {/* Page Title */}
       <div className="text-center py-8">
@@ -78,6 +84,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

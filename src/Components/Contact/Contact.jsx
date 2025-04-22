@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import { Helmet } from 'react-helmet';
 function Contact() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,6 +52,10 @@ function Contact() {
   });
 
   return (
+    <>
+    <Helmet>
+  <title>Contact Us</title>
+</Helmet>
     <div className="container mx-auto px-6 py-10 md:w-11/12">
       {/* Contact Heading */}
       <h1 className={`${Style.ContactHeading} text-center text-[48px] font-[600] text-[#011632] mb-8 poppins`}>Contact Us</h1>
@@ -182,6 +186,7 @@ function Contact() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
