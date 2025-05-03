@@ -25,10 +25,12 @@ const routers = createBrowserRouter([
       { path: "about", element: <AboutUs /> },
       { path: "specializationsPage", element: <SpecializationsPage /> },
       { path: "Doctor-details/:id", element: <DoctorDeatils /> },
-      { path: "Payment", element: <Payment /> },
       { path: "Profile", element: <Profile/> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+
+      { path: "Payment", element: <Payment /> },
+
       { path: "*", element: <NotFound /> }
     ],
   },
