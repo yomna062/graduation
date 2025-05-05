@@ -14,6 +14,7 @@ import DoctorDeatils from './Components/DoctorPage/DoctorDeatils.jsx'
 import Payment from './Components/Payment/Payment.jsx'
 
 import Profile from './Components/Profile/Profile';
+import Doctor_Panel from './Components/Dashboard/Doctor_Panel.jsx'
 
 const routers = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const routers = createBrowserRouter([
       { path: "Profile", element: <Profile/> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      {path: 'DoctorPanel' , element: <Doctor_Panel />},
       { path: "*", element: <NotFound /> }
     ],
   },

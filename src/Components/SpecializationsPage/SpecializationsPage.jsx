@@ -22,9 +22,12 @@ export default function SpecializationsPage() {
         setLoading(true);
         const specializationsRes = await axiosInstance.get('/specializations/');
         setSpecializations(specializationsRes.data);
+        console.log('specializations', specializationsRes.data);
+        
 
         const doctorsRes = await axiosInstance.get('/All_doctors/');
         setDoctors(doctorsRes.data.results);
+        console.log('doctors', doctorsRes.data);
         setFilteredDoctors(doctorsRes.data.results);
       } catch (err) {
         console.error('Error fetching data:', err?.response?.data || err.message);
