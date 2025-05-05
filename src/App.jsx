@@ -15,6 +15,8 @@ import Payment from './Components/Payment/Payment.jsx'
 
 import Profile from './Components/Profile/Profile';
 import Doctor_Panel from './Components/Dashboard/Doctor_Panel.jsx'
+import PatientPanel from './Components/Dashboard/PatientPanel.jsx'
+import Panel from './Components/Panel/Panel.jsx'
 
 const routers = createBrowserRouter([
   {
@@ -26,11 +28,12 @@ const routers = createBrowserRouter([
       { path: "about", element: <AboutUs /> },
       { path: "specializationsPage", element: <SpecializationsPage /> },
       { path: "Doctor-details/:id", element: <DoctorDeatils /> },
-      { path: "Payment", element: <Payment /> },
       { path: "Profile", element: <Profile/> },
+      {path: "Payment", element: <Payment />},
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
-      {path: 'DoctorPanel' , element: <Doctor_Panel />},
+      {path: 'panel' , element: <Panel />},
+      {path:'patient-panel' , element: <PatientPanel />},
       { path: "*", element: <NotFound /> }
     ],
   },

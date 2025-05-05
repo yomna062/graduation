@@ -16,19 +16,31 @@ export default function SpecializationsPage() {
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 10;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
+
         const specializationsRes = await axiosInstance.get('/specializations/');
         setSpecializations(specializationsRes.data);
         console.log('specializations', specializationsRes.data);
         
 
-        const doctorsRes = await axiosInstance.get('/All_doctors/');
-        setDoctors(doctorsRes.data.results);
-        console.log('doctors', doctorsRes.data);
-        setFilteredDoctors(doctorsRes.data.results);
+        let allDoctors = [];
+        let nextUrl = '/All_doctors/';
+
+        while (nextUrl) {
+          const res = await axiosInstance.get(nextUrl);
+          allDoctors = [...allDoctors, ...res.data.results];
+          nextUrl = res.data.next ? new URL(res.data.next).pathname + new URL(res.data.next).search : null;
+        }
+
+        setDoctors(allDoctors);
+        setFilteredDoctors(allDoctors);
       } catch (err) {
         console.error('Error fetching data:', err?.response?.data || err.message);
       } finally {
@@ -68,6 +80,15 @@ export default function SpecializationsPage() {
     setFilteredDoctors(filtered);
   }, [searchSpecialization, searchPrice, searchRating, searchLocation, doctors]);
 
+  // Pagination logic
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
+
+  const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const resetFilters = () => {
     setSearchSpecialization('');
     setSearchPrice('');
@@ -95,9 +116,7 @@ export default function SpecializationsPage() {
         </button>
 
         <div
-          className={`absolute md:relative top-0 left-0 h-full w-64 bg-white border-r border-gray-200 p-4 transition-transform duration-300 z-50 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } md:translate-x-0 md:w-1/4 md:h-screen`}
+          className={`absolute md:relative top-0 left-0 h-full w-64 bg-white border-r border-gray-200 p-4 transition-transform duration-300 z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:w-1/4 md:h-screen`}
         >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Specializations</h2>
@@ -113,9 +132,7 @@ export default function SpecializationsPage() {
                 setSearchSpecialization(spec.name);
                 setSidebarOpen(false);
               }}
-              className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${
-                searchSpecialization === spec.name ? 'bg-blue-100' : ''
-              }`}
+              className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${searchSpecialization === spec.name ? 'bg-blue-100' : ''}`}
             >
               {spec.name} ({spec.doctor_count})
             </div>
@@ -161,8 +178,8 @@ export default function SpecializationsPage() {
             <div className="text-center text-gray-500">Loading doctors...</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredDoctors.length > 0 ? (
-                filteredDoctors.map((doctor) => (
+              {currentDoctors.length > 0 ? (
+                currentDoctors.map((doctor) => (
                   <Link
                     to={`/Doctor-details/${doctor.id}`}
                     key={doctor.id}
@@ -183,8 +200,7 @@ export default function SpecializationsPage() {
                       ⭐{' '}
                       {doctor.reviews?.length
                         ? (
-                            doctor.reviews.reduce((sum, review) => sum + review.rating, 0) /
-                            doctor.reviews.length
+                            doctor.reviews.reduce((sum, review) => sum + review.rating, 0) / doctor.reviews.length
                           ).toFixed(1)
                         : 'No reviews yet'}
                     </p>
@@ -202,6 +218,25 @@ export default function SpecializationsPage() {
               )}
             </div>
           )}
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center mt-6">
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span className="flex items-center text-lg">{currentPage}</span>
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded-md ml-2"
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </>

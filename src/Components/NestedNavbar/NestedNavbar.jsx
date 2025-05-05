@@ -82,7 +82,7 @@ export default function NestedNavbar() {
     setIsAuthenticated(false);
     setUserImage(defaultUserImage);
     setUserName("");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -161,7 +161,7 @@ export default function NestedNavbar() {
             </li>
             <li>
               <NavLink
-                to="/DoctorPanel"
+                to="/panel"
                 className={({ isActive }) =>
                   isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
                 }
@@ -202,13 +202,13 @@ export default function NestedNavbar() {
 
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md py-2">
-                  <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white">
+                  <Link to="/profile" className="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-200 rounded-b-xl">
                     Profile
                   </Link>
                   <Link to={'/Payment'} className="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-200 rounded-b-xl">
                     Payment
                   </Link>
-                  <button onClick={handleLogout} className="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white w-full text-left">
+                  <button onClick={handleLogout} className="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-200 rounded-b-xl w-full text-left">
                     Logout
                   </button>
                 </div>

@@ -31,12 +31,6 @@ export default function Navbar() {
         };
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        // window.dispatchEvent(new Event("authChange")); // 🔹 إجبار التحديث
-        navigate("/login");
-    };
 
     return (
         <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
