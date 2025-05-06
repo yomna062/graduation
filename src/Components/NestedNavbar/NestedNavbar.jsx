@@ -159,6 +159,16 @@ export default function NestedNavbar() {
                 Contact
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/DoctorPanel"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-600 font-bold px-4 py-2 md:p-0" : "text-gray-700 hover:text-blue-700 font-medium px-4 py-2 md:p-0"
+                }
+              >
+                Dashboard
+              </NavLink>
+            </li>
           </ul>
         )}
 

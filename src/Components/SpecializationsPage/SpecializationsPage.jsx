@@ -27,18 +27,13 @@ export default function SpecializationsPage() {
 
         const specializationsRes = await axiosInstance.get('/specializations/');
         setSpecializations(specializationsRes.data);
+        console.log('specializations', specializationsRes.data);
+        
 
-        let allDoctors = [];
-        let nextUrl = '/All_doctors/';
-
-        while (nextUrl) {
-          const res = await axiosInstance.get(nextUrl);
-          allDoctors = [...allDoctors, ...res.data.results];
-          nextUrl = res.data.next ? new URL(res.data.next).pathname + new URL(res.data.next).search : null;
-        }
-
-        setDoctors(allDoctors);
-        setFilteredDoctors(allDoctors);
+        const doctorsRes = await axiosInstance.get('/All_doctors/');
+        setDoctors(doctorsRes.data.results);
+        console.log('doctors', doctorsRes.data);
+        setFilteredDoctors(doctorsRes.data.results);
       } catch (err) {
         console.error('Error fetching data:', err?.response?.data || err.message);
       } finally {

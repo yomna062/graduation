@@ -20,7 +20,7 @@ function Login() {
       .max(150, "Username must be at most 150 characters"),
     password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be at least 8 characters")
+      .min(6, "Password must be at least 6 characters")
       .max(150, "Password must be at most 150 characters"),
   });
 
@@ -41,7 +41,9 @@ function Login() {
       window.dispatchEvent(new Event("authChange"));
       navigate("/");
     } catch (error) {
-      setError(error.response?.data?.detail || "Login failed");
+      console.log(error);
+      setError(error.response?.data?.message
+         || "Login failed");
     } finally {
       setisLoading(false);
     }

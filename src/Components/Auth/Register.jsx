@@ -110,7 +110,8 @@ const Register = () => {
       console.log(response.data);
       setisLoading(false);
     } catch (error) {
-      toast.error('An unexpected error occurred. Please try again.');
+      console.log(error);
+      toast.error(errorMessage);
       if (error.response && error.response.data) {
         // Extract the first error message from the response
         const errorKey = Object.keys(error.response.data)[0]; // e.g., "email"
