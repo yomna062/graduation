@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../Axiosinstance';
+import { Link } from 'react-router-dom';
 
 function Doctor_Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -13,6 +14,7 @@ function Doctor_Appointments() {
         setError(null);
         
         const response = await axiosInstance.get('doctor_panal_availabilities/appointments_by_day/');
+        console.log("Appointments response:", response.data);
         
         // Handle different possible response structures
         let appointmentsData = [];
@@ -90,7 +92,8 @@ function Doctor_Appointments() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> */}
+                  <th className="px-6 py-3 text-xs text-center font-medium text-gray-500 uppercase tracking-wider">History</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -120,10 +123,26 @@ function Doctor_Appointments() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatTime(appointment.appointment_time)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    {/* <td className="px-6 py-4 whitespace-nowrap">
                       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                         Paid
                       </span>
+                    </td> */}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex space-x-3">
+                        <Link 
+                          to={`/AddHistory/${appointment.patient_id}`} 
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        >
+                          Add History
+                        </Link>
+                        <Link 
+                          to={`/SeeHistory/${appointment.patient_id}`}
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        >
+                          See History
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}

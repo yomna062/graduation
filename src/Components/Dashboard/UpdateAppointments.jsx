@@ -129,24 +129,18 @@ function UpdateAppointments({setDummyState , dummyState}) {
 
     if (error && !appointment) {
         return (
-            <div className="p-8 max-w-4xl mx-auto">
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Doctor Availability</h2>
+            <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 text-center">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Doctor Availability</h2>
                     <div className="text-red-500 mb-6">{error}</div>
-                    {/* <button 
-                        onClick={() => setIsEditing(true)}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-                    >
-                        Create New Availability
-                    </button> */}
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="p-8 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Doctor Availability</h2>
+        <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Doctor Availability</h2>
             
             {error && (
                 <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6">
@@ -156,44 +150,83 @@ function UpdateAppointments({setDummyState , dummyState}) {
             
             {!isEditing ? (
                 <>
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-indigo-600 text-white">
-                                <tr>
-                                    <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Doctor</th>
-                                    <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Available From</th>
-                                    <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Available To</th>
-                                    <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Working Days</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                <tr className="hover:bg-blue-50 transition-colors">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {appointment?.doctor || 'N/A'}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {appointment?.available_from ? formatTime(appointment.available_from) : 'Not set'}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {appointment?.available_to ? formatTime(appointment.available_to) : 'Not set'}
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-500">
-                                        {appointment?.days_of_week?.length > 0 ? (
-                                            <ul className="space-y-1">
-                                                {appointment.days_of_week.map((day, index) => (
-                                                    <li key={index} className="flex items-center">
-                                                        <span className="w-2 h-2 mr-2 bg-indigo-400 rounded-full"></span>
-                                                        {day}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        ) : (
-                                            <span className="text-gray-400">No days selected</span>
-                                        )}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    {/* Card layout for mobile (always visible) */}
+                    <div className="block lg:hidden bg-white rounded-lg shadow-md overflow-hidden mb-6">
+                        <div className="p-4">
+                            <h3 className="font-medium text-gray-900 mb-3">Doctor Details</h3>
+                            <div className="space-y-4">
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-600">Doctor</p>
+                                    <p className="mt-1">{appointment?.doctor || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-600">Available From</p>
+                                    <p className="mt-1">{appointment?.available_from ? formatTime(appointment.available_from) : 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-600">Available To</p>
+                                    <p className="mt-1">{appointment?.available_to ? formatTime(appointment.available_to) : 'Not set'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-600">Working Days</p>
+                                    {appointment?.days_of_week?.length > 0 ? (
+                                        <ul className="mt-1 space-y-1">
+                                            {appointment.days_of_week.map((day, index) => (
+                                                <li key={index} className="flex items-center">
+                                                    <span className="w-2 h-2 mr-2 bg-indigo-400 rounded-full"></span>
+                                                    {day}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <span className="text-gray-400">No days selected</span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Table for desktop (hidden on mobile) */}
+                    <div className="hidden lg:block bg-white rounded-lg shadow-md overflow-hidden mb-6">
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-indigo-600 text-white">
+                                    <tr>
+                                        <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Doctor</th>
+                                        <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Available From</th>
+                                        <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Available To</th>
+                                        <th className="px-6 py-4 text-left text-sm font-medium uppercase tracking-wider">Working Days</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    <tr className="hover:bg-blue-50 transition-colors">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {appointment?.doctor || 'N/A'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {appointment?.available_from ? formatTime(appointment.available_from) : 'Not set'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {appointment?.available_to ? formatTime(appointment.available_to) : 'Not set'}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-500">
+                                            {appointment?.days_of_week?.length > 0 ? (
+                                                <ul className="space-y-1">
+                                                    {appointment.days_of_week.map((day, index) => (
+                                                        <li key={index} className="flex items-center">
+                                                            <span className="w-2 h-2 mr-2 bg-indigo-400 rounded-full"></span>
+                                                            {day}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            ) : (
+                                                <span className="text-gray-400">No days selected</span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div className="flex justify-end space-x-4">
@@ -215,8 +248,8 @@ function UpdateAppointments({setDummyState , dummyState}) {
                     </div>
                 </>
             ) : (
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <h3 className="text-xl font-semibold mb-4">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-4">
                         {appointment ? 'Edit Working Hours' : 'Create New Availability'}
                     </h3>
                     <form onSubmit={handleEditSubmit}>

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../Axiosinstance';
-import { Calendar, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, CheckCircle, XCircle, AlertCircle, History } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function PatientPanel() {
   const [appointments, setAppointments] = useState([]);
   const [pagination, setPagination] = useState({ next: null, previous: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   const fetchAppointments = async (url = 'patient_panal_appointments/') => {
     try {
@@ -26,6 +29,19 @@ function PatientPanel() {
   };
 
   useEffect(() => {
+    try {
+      const userString = localStorage.getItem('user');
+      if (userString) {
+        const userObject = JSON.parse(userString);
+        const id = userObject.id;
+        setUserId(id);
+      } else {
+        // console.log('No user found in localStorage');
+      }
+    } catch (error) {
+      // console.error('Error retrieving user from localStorage:', error);
+    }
+    
     fetchAppointments();
   }, []);
 
@@ -66,6 +82,10 @@ function PatientPanel() {
     }
   };
 
+  const handleSeeHistoryClick = () => {
+    navigate(`/SeeHistory/${userId}`);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -85,7 +105,16 @@ function PatientPanel() {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">My Appointments</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">My Appointments</h2>
+        <button 
+          onClick={handleSeeHistoryClick}
+          className="flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors duration-200"
+        >
+          <History className="mr-2" size={16} />
+          See History
+        </button>
+      </div>
       
       {appointments.length === 0 ? (
         <div className="text-center py-8 text-gray-500">

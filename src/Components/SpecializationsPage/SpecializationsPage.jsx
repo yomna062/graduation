@@ -73,7 +73,7 @@ export default function SpecializationsPage() {
 
     if (searchLocation) {
       filtered = filtered.filter(doctor =>
-        doctor.location.toLowerCase().includes(searchLocation.toLowerCase())
+        doctor.location?.toLowerCase().includes(searchLocation.toLowerCase())
       );
     }
 

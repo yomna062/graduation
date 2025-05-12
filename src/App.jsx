@@ -17,6 +17,8 @@ import Profile from './Components/Profile/Profile';
 import Doctor_Panel from './Components/Dashboard/Doctor_Panel.jsx'
 import PatientPanel from './Components/Dashboard/PatientPanel.jsx'
 import Panel from './Components/Panel/Panel.jsx'
+import AddHistory from './Components/Dashboard/AddHistory.jsx'
+import SeeHistory from './Components/Dashboard/SeeHistory.jsx'
 
 const routers = createBrowserRouter([
   {
@@ -34,6 +36,8 @@ const routers = createBrowserRouter([
       { path: "register", element: <Register /> },
       {path: 'panel' , element: <Panel />},
       {path:'patient-panel' , element: <PatientPanel />},
+      {path:'AddHistory/:id' , element: <AddHistory />},
+      {path:'SeeHistory/:id' , element: <SeeHistory />},
       { path: "*", element: <NotFound /> }
     ],
   },
