@@ -15,6 +15,8 @@ import Payment from './Components/Payment/Payment.jsx'
 
 import Profile from './Components/Profile/Profile';
 import Doctor_Panel from './Components/Dashboard/Doctor_Panel.jsx'
+import Bounce from './Components/Bounce/Bounce';
+
 
 const routers = createBrowserRouter([
   {
@@ -29,7 +31,7 @@ const routers = createBrowserRouter([
       { path: "Profile", element: <Profile/> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
-
+      { path: "Bounce", element: <Bounce /> },
 
       { path: "Payment", element: <Payment /> },
 

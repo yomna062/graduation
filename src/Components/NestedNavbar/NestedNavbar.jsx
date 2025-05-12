@@ -56,6 +56,33 @@ export default function NestedNavbar() {
     setLoading(false);
   };
 
+  // Set up automatic bonus points update
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isAuthenticated) {
+        updateBonusPoints(); // تحديث النقاط فقط وليس جميع البيانات
+      }
+    }, 10000); // التحديث كل 10 ثواني
+
+    return () => clearInterval(interval); // تنظيف الـ interval عند فك التفاعل
+  }, [isAuthenticated]);
+
+  // تحديث النقاط فقط
+  const updateBonusPoints = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await axios.get("https://mostafa3mad.pythonanywhere.com/api/profile/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const points = response.data?.bonus_points || 0;
+      setBonusPoints(points);  // تحديث النقاط فقط
+    } catch (err) {
+      console.error("Error fetching bonus points:", err);
+    }
+  };
+
   useEffect(() => {
     updateAuthStatus();
     window.addEventListener("authChange", updateAuthStatus);
@@ -82,7 +109,7 @@ export default function NestedNavbar() {
     setIsAuthenticated(false);
     setUserImage(defaultUserImage);
     setUserName("");
-    navigate("/");
+    navigate("Login");
   };
 
   useEffect(() => {
@@ -179,9 +206,10 @@ export default function NestedNavbar() {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center space-x-2 focus:outline-none"
               >
-                {/* أيقونة البونص مع الرقم */}
                 <div className="relative w-8 h-8 flex items-center justify-center">
-                  <FiGift className="text-green-500 text-3xl" />
+                  <Link to="/Bounce">
+                    <FiGift className="text-green-500 text-3xl" />
+                  </Link>
                   {bonusPoints > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-sm font-semibold px-1.5 py-0.5 rounded-full leading-none">
                       {bonusPoints}
