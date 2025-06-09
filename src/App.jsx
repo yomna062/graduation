@@ -19,6 +19,8 @@ import PatientPanel from './Components/Dashboard/PatientPanel.jsx'
 import Panel from './Components/Panel/Panel.jsx'
 import AddHistory from './Components/Dashboard/AddHistory.jsx'
 import SeeHistory from './Components/Dashboard/SeeHistory.jsx'
+import Bounce from './Components/Bounce/Bounce';
+
 
 const routers = createBrowserRouter([
   {
@@ -34,10 +36,16 @@ const routers = createBrowserRouter([
       {path: "Payment", element: <Payment />},
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      { path: "Bounce", element: <Bounce /> },
+      { path: "Payment", element: <Payment /> },
       {path: 'panel' , element: <Panel />},
       {path:'patient-panel' , element: <PatientPanel />},
       {path:'AddHistory/:id' , element: <AddHistory />},
       {path:'SeeHistory/:id' , element: <SeeHistory />},
+
+
+      {path: 'DoctorPanel' , element: <Doctor_Panel />},
+
       { path: "*", element: <NotFound /> }
     ],
   },

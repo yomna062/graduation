@@ -27,8 +27,6 @@ export default function SpecializationsPage() {
 
         const specializationsRes = await axiosInstance.get('/specializations/');
         setSpecializations(specializationsRes.data);
-        console.log('specializations', specializationsRes.data);
-        
 
         let allDoctors = [];
         let nextUrl = '/All_doctors/';

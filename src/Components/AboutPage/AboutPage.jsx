@@ -29,10 +29,11 @@ const AboutUs = () => {
   <div className="md:w-1/2 py-4 md:py-0 md:pl-8">
     <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h2>
     <p className="text-gray-700 leading-relaxed mb-4">
-      Lorem ipsum dolor sit amet consectetur. Pulvinar in nibh tortor magna et. Morbi phasellus urna malesuada pharetra odio elementum vulputate feugiat egestas. Tincidunt massa quam ut euismod arcu magna suspendisse. Ullamcorper sed consectetur feugiat non ultricies vitae.
+      Our mission is to revolutionize healthcare by providing an AI-powered platform that simplifies appointment booking for patients and doctors. We aim to connect users with the right medical professionals, making healthcare more accessible, efficient, and personalized through innovative technology.
     </p>
+    <h2 className='text-2xl font-bold text-gray-800 mb-4'>Our Vision</h2>
     <p className="text-gray-700 leading-relaxed">
-      Lorem ipsum dolor sit amet consectetur. Auctor mattis vehicula ullamcorper id imperdiet non. Et nulla sed amet lacus. Amet facilisis aliquet mattis dignissim rhoncus. Ut amet platea egestas eu. Aliquet in nec nulla at eu dictum. Et ultrices non tempus commodo id donec. Gravida felis faucibus tempus nunc tempus pharetra. At leo sit dolor adipiscing ornare. Amet feugiat sed varius nulla vulputate.
+      Our vision is to create a world where healthcare is easily accessible to everyone. By leveraging artificial intelligence, we seek to empower patients to make informed decisions about their health, while supporting doctors with efficient tools for managing consultations, appointments, and patient care.
     </p>
   </div>
 </div>
