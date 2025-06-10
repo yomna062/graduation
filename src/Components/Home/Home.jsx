@@ -8,7 +8,7 @@ import Specielities from "../Specielities/Specielities";
 import MostSearched from "../MostSearched/MostSearched";
 import AboutSec from "../AboutSec/AboutSec";
 import Feedback from "../Feedback/Feedback";
-import ChatBot from "../ChatBot/ChatBot"; // ✅ استيراد الشات بوت
+import ChatBot from "../Chatbot/Chatbot";
 
 export default function Home() {
   const [showChatBot, setShowChatBot] = useState(false); // حالة التحكم في ظهور الشات
