@@ -17,7 +17,7 @@ function Chatbot() {
   }, [messages]);
 
   const fetchPrediction = async (symptom) => {
-    const response = await fetch("https://model-ai-m5g8.onrender.com/predict/", {
+    const response = await fetch("https://model-ai-a1ki.onrender.com/predict/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
