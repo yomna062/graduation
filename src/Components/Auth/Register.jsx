@@ -73,7 +73,7 @@ const Register = () => {
       .required('Password confirmation is required'),
     role: yup.string().required('Role is required'),
     gender: yup.string().required('Gender is required'),
-    profile_picture: yup.mixed(),
+    // profile_picture: yup.mixed(),
     bio: yup.string().nullable().when('role', {
       is: 'doctor',
       then: () => yup.string().required('Bio is required'),
@@ -98,10 +98,10 @@ const Register = () => {
       is: 'doctor',
       then: () => yup.number().required('Consultation price is required'),
     }),
-    profile_certificate: yup.mixed().when('role', {
-      is: 'doctor',
-      then: () => yup.mixed().required('Certificate is required'),
-    }),
+    // profile_certificate: yup.mixed().when('role', {
+    //   is: 'doctor',
+    //   then: () => yup.mixed().required('Certificate is required'),
+    // }),
   });
 
   const handleSubmit = async (values) => {
